@@ -12,6 +12,14 @@ public class PlayerMove : MonoBehaviour
 
     // 트랜스폼 참조 변수.
     [SerializeField] private Transform refTransform;
+    
+    
+    
+    // x 위치에 사용할 범위 변수.
+    [SerializeField] private ClampValue clampX;
+
+    // y 위치에 사용할 범위 변수.
+    [SerializeField] private ClampValue clampY;
 
     private void Awake()
     {
@@ -43,10 +51,10 @@ public class PlayerMove : MonoBehaviour
             Vector3 targetPosition = clickPosition + offset;
 
             // x축의 위치를 화면에서 벗어나지 않도록 설정.
-            targetPosition.x = Mathf.Clamp(clickPosition.x, -1.3f, 1.3f);
+            targetPosition.x = Mathf.Clamp(targetPosition.x, clampX.Min, clampX.Max);
 
             // y축의 위치를 화면에서 벗어나지 않도록 설정.
-            targetPosition.y = Mathf.Clamp(clickPosition.y, -2.3f, 2.1f);
+            targetPosition.y = Mathf.Clamp(targetPosition.y, clampY.Min, clampY.Max);
 
             // 3차원으로 변환을 거친 좌표를 플레이어 좌표로 설정.
             //offset = refTransform.position + clickPosition;
