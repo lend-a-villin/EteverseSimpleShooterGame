@@ -291,7 +291,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Spaceship_8
+      name: Player_shoot_0
       rect:
         serializedVersion: 2
         x: 0
@@ -312,7 +312,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Spaceship_9
+      name: Player_shoot_1
       rect:
         serializedVersion: 2
         x: 48
@@ -333,7 +333,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Spaceship_10
+      name: Player_shoot_2
       rect:
         serializedVersion: 2
         x: 96
@@ -354,7 +354,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Spaceship_11
+      name: Player_shoot_3
       rect:
         serializedVersion: 2
         x: 144
@@ -511,10 +511,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      Player_shoot_0: 1030234090817679663
+      Player_shoot_1: 9116799491040291711
+      Player_shoot_2: -4210797638839589260
+      Player_shoot_3: 11306056759265022
       Spaceship_0: 7851470227991654557
       Spaceship_1: 5680876330281301099
-      Spaceship_10: -4210797638839589260
-      Spaceship_11: 11306056759265022
       Spaceship_12: -1444207754889221660
       Spaceship_13: 3864938954121280888
       Spaceship_14: -7852715909887160642
@@ -528,8 +530,6 @@ TextureImporter:
       Spaceship_5: -4226801132454971062
       Spaceship_6: -4719210468415323688
       Spaceship_7: 1621602422534783532
-      Spaceship_8: 1030234090817679663
-      Spaceship_9: 9116799491040291711
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

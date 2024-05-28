@@ -3,7 +3,38 @@ using UnityEngine;
 // 마우스 드래그(모바일-터치)를 사용해서 플레이어를 이동시키는 스크립트.
 public class PlayerMove : MonoBehaviour
 {
+
+    // 최소/ 최대 범위를 지정할 땜 사용할 클래스 정의.
+    // 우리가 선언한 클래스는 유니티가 모름.
+    // 이 클래스를 인스펙터에 노출하려면 명시적으로 아래 태그를 추가해야 함.
+    [System.Serializable]
+    class ClampValue
+    {
+        // 범위를 지정할 때 사용할 최소값.
+        [SerializeField] private float min;
+
+        // 범위를 지정할 때 사용할 최대값.
+        [SerializeField] private float max;
+
+        public float Min { get { return min; } }
+        public float Max { get { return max; } }
+        
+        // 전달 받은 값을 min과 max 사이의 값으로 고정해주는 함수.
+
+        public float Clamp(float target)
+        {
+            return Mathf.Clamp(target, min, max);
+        }
+    }
+
     [SerializeField] private float lagSpeed = 2f;
+    
+    // x 위치에 사용할 범위 변수.
+    [SerializeField] private ClampValue clampX;
+
+    // y 위치에 사용할 범위 변수.
+    [SerializeField] private ClampValue clampY;
+
     // 카메라를 저장할 참조 변수.
     private Camera mainCamera;
 
@@ -14,14 +45,8 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private Transform refTransform;
     
     
-    
-    // x 위치에 사용할 범위 변수.
-    [SerializeField] private ClampValue clampX;
 
-    // y 위치에 사용할 범위 변수.
-    [SerializeField] private ClampValue clampY;
-
-    private void Awake()
+private void Awake()
     {
         // 메인 카메라를 변수에 저장.
         mainCamera = Camera.main;
@@ -36,6 +61,7 @@ public class PlayerMove : MonoBehaviour
         {
             Vector3 clickPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             clickPosition.z = refTransform.position.z;
+            // 오프셋 계산 후 저장.
             offset = refTransform.position - clickPosition;
 
         }
@@ -51,10 +77,12 @@ public class PlayerMove : MonoBehaviour
             Vector3 targetPosition = clickPosition + offset;
 
             // x축의 위치를 화면에서 벗어나지 않도록 설정.
-            targetPosition.x = Mathf.Clamp(targetPosition.x, clampX.Min, clampX.Max);
+            //targetPosition.x = Mathf.Clamp(targetPosition.x, clampX.Min, clampX.Max);
+            targetPosition.x = clampX.Clamp(targetPosition.x);
 
             // y축의 위치를 화면에서 벗어나지 않도록 설정.
-            targetPosition.y = Mathf.Clamp(targetPosition.y, clampY.Min, clampY.Max);
+            //targetPosition.y = Mathf.Clamp(targetPosition.y, clampY.Min, clampY.Max);
+            targetPosition.y = clampY.Clamp(targetPosition.y);
 
             // 3차원으로 변환을 거친 좌표를 플레이어 좌표로 설정.
             //offset = refTransform.position + clickPosition;
