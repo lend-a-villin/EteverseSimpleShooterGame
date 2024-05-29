@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 // 플레이어의 발사를 제어하는 스크립트.
 public class PlayerShoot : MonoBehaviour
@@ -8,19 +10,25 @@ public class PlayerShoot : MonoBehaviour
     // 자동으로 발사되도록 기능을 구현.
     // 탄약이 발사되는 간격.
     [SerializeField] private float shootInterval = 0.2f;
+    
+    // 플레이어 탄약 프리팹.
     [SerializeField] private GameObject bulletPrefab;
 
-    // 애니메이션 제어.
-    private Animator refAnimator;
+    // 탄약 발사 위치 트랜스폼.
+    [SerializeField] private Transform firePosition;
+
+    // 탄약을 발사할 때 발생시킬 이벤트 (타입: 유니티 이벤트). 이 구조가 좋은 구조가 아니다. 이걸 프라이빗으로 두고 이벤트 게터 세터처럼 하는 게 원칙적으로는 좋다.
+    public UnityEvent OnShoot;
 
     // 초 계산 변수 (누적 시간 계산).
     private float elapsedTime = 0f;
 
     private void Awake()
     {
-        refAnimator = GetComponent<Animator>();
         // 자동으로 반복 실행되도록 예약.
-        InvokeRepeating("Shoot", 0f, shootInterval);
+        //InvokeRepeating("Shoot", 0f, shootInterval);
+
+        //CancelInvoke("Shoot");
     }
 
     // 발사 함수.
@@ -39,13 +47,19 @@ public class PlayerShoot : MonoBehaviour
     }
     private void Shoot()
     {
-        // 애니메이션 트리거 설정.
-        refAnimator.SetTrigger("Shoot");
+        OnShoot?.Invoke();
+
+        // 위의 구문은 아래 주석과 같다.
+        //if (OnShoot != null)
+        //{
+        //    OnShoot.Invoke();
+        //}
+
 
         if (bulletPrefab != null)
         {
-            // 탄 발사.
-            Instantiate(bulletPrefab, transform.position, transform.rotation);
+            // 탄 발사. Quaternion.identity는 0,0,0도(회전 안 함)다.
+            Instantiate(bulletPrefab, firePosition.position, Quaternion.identity);
         }
         else
         {

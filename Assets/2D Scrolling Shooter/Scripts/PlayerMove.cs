@@ -6,7 +6,7 @@ public class PlayerMove : MonoBehaviour
 
     // 최소/ 최대 범위를 지정할 땜 사용할 클래스 정의.
     // 우리가 선언한 클래스는 유니티가 모름.
-    // 이 클래스를 인스펙터에 노출하려면 명시적으로 아래 태그를 추가해야 함.
+    // 이 내부 클래스를 인스펙터에 노출하려면 명시적으로 아래 어트리뷰트를 추가해야 함.
     [System.Serializable]
     class ClampValue
     {
