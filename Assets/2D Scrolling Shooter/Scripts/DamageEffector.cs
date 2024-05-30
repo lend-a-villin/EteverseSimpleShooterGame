@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-// 적 우주선의 대미지 효과를 보여줄 때 사용할 스크립트.
-public class EnemyEffector : MonoBehaviour
+// 우주선의 대미지 효과를 보여줄 때 사용할 스크립트.
+public class DamageEffector : MonoBehaviour
 {
     // 필드.
 
