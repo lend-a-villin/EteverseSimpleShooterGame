@@ -13,6 +13,10 @@ public class EnemyShoot : MonoBehaviour
     [SerializeField] private float shootInterval = 1.0f;
     // 탄약의 속력.
     [SerializeField] private float bulletSpeed = 3.0f;
+
+    // 탄약의 발사를 제한하는 Y 높이 값.
+    [SerializeField] private float shootStopYPosition = -2f;
+
     // 탄약 프리팹 연결.
     [SerializeField] private GameObject bulletPrefab;
 
@@ -58,14 +62,29 @@ public class EnemyShoot : MonoBehaviour
     // 발사 메소드.
     private void Shoot()
     {
-        // 플레이어의 위치를 향하는 방향 구하기.
-        // 검증.
-        if (refPlayer == null)
+
+        if (refPlayer == null || (transform.position.y <= shootStopYPosition) )
         {
             return;
         }
         // 벡터의 덧셈과 뺄셈을 공부해두면 좋다. 그냥 빼기일 경우에 뒤에 것에서 앞의 것을 향하는 방향이 생성된다는 정도만 알아도 된다.
         Vector3 direction = refPlayer.position - transform.position;
+        // 플레이어의 위치를 향하는 방향 구하기.
+        // 검증.
+        // 플레이어가 적 캐릭터 앞에 있는지 뒤에 있는지 확인 후 앞에 있으면 발사.
+        // Dot(내적)을 활용한다.
+        // 값만 봐서는 위치인지 벡터인지 알 수 없다.
+        // Dot은 벡터(방향)를 이용한다.
+        // 플레이어와 적의 위치를 빼서 내적을 한다.
+        // A벡터 내적 B내적을 하면 |A|*|B| * Cos세타.
+        // 내적 값이 +인지 -인지 보면 된다.
+        // + 부분이 앞 방향이다.
+        //if ((Vector3.Dot(transform.up, direction.normalized) > 0f))
+        //{
+        //    return;
+        //}
+        // 이걸 응용해서 플레이어가 다가간 문이 열리는 방향을 결정해줄 수도 있다.
+         
 
         // 프리팹을 이용해 탄약을 생성하고, 
         var newBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
