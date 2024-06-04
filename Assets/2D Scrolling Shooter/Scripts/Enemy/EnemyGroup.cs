@@ -1,35 +1,35 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-// ÀÚ½Ä °ÔÀÓ ¿ÀºêÁ§Æ®°¡ ¾øÀ¸¸é »èÁ¦¸¦ ÇÏµµ·Ï Ã³¸®ÇÏ´Â ½ºÅ©¸³Æ®.
+// ìžì‹ ê²Œìž„ ì˜¤ë¸Œì íŠ¸ê°€ ì—†ìœ¼ë©´ ì‚­ì œë¥¼ í•˜ë„ë¡ ì²˜ë¦¬í•˜ëŠ” ìŠ¤í¬ë¦½íŠ¸.
 public class EnemyGroup : MonoBehaviour
 {
     private void Awake()
     {
-        // °£ÇæÀûÀ¸·Î È®ÀÎÇÏ´Â ¸Þ¼Òµå.
+        // ê°„í—ì ìœ¼ë¡œ í™•ì¸í•˜ëŠ” ë©”ì†Œë“œ.
         InvokeRepeating("CheckChildState", 0f, 0.5f);
     }
 
-    // ³Ê¹« ÀÚÁÖ È®ÀÎÇÏ¹Ç·Î °³Ã¼°¡ ¸¹À¸¸é ¼º´É ÀúÇÏ°¡ ¿À±â ½±´Ù.
+    // ë„ˆë¬´ ìžì£¼ í™•ì¸í•˜ë¯€ë¡œ ê°œì²´ê°€ ë§Žìœ¼ë©´ ì„±ëŠ¥ ì €í•˜ê°€ ì˜¤ê¸° ì‰½ë‹¤.
     //private void Update()
     //{
     //    CheckChildState();
     //}
 
-    // ÀÚ½Ä °ÔÀÓ ¿ÀºêÁ§Æ®°¡ ÀÖ´ÂÁö ¾ø´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö.
+    // ìžì‹ ê²Œìž„ ì˜¤ë¸Œì íŠ¸ê°€ ìžˆëŠ”ì§€ ì—†ëŠ”ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜.
     private void CheckChildState()
     {
-        // ÀÚ½ÄÀÌ ¾øÀ¸¸é °ÔÀÓ ¿ÀºêÁ§Æ® »èÁ¦.
+        // ìžì‹ì´ ì—†ìœ¼ë©´ ê²Œìž„ ì˜¤ë¸Œì íŠ¸ ì‚­ì œ.
         if (transform.childCount == 0)
         {
-            // ¹Ýº¹ È®ÀÎ Ãë¼ÒÇÏ±â.
-            // ¾È ÇØµµ µÇ±ä ÇÏÁö¸¸ °£ÇæÀûÀ¸·Î ¹®Á¦°¡ »ý±è.
-            // ±âº»ÀûÀ¸·Î ÄÚ·çÆ¾À¸·Î µµ´Âµ¥, °ÔÀÓ ¿ÀºêÁ§Æ®°¡ »ì¾ÆÀÖ¾î¾ß µ·´Ù.
-            // Áö±ÝÃ³·³ °ÔÀÓ ¿ÀºêÁ§Æ®°¡ »èÁ¦µÇ¸é ¾Ë¾Æ¼­ Á×´Âµ¥, ÄÚ·çÆ¾ÀÌ¸é À¯´ÏÆ¼°¡ ¾Ë¾Æ¼­ Á×¿©ÁÖ´Âµ¥, ÀÎº¸Å©´Â ³»ºÎÀûÀ¸·Î ¾à°£ ´Ù¸£°Ô °ü¸®¸¦ ÇÑ´Ù.
-            // ¿¹¾à Å³ ¸®½ºÆ®¿¡ ¿Ã¶ó°¡ÀÖ´Âµ¥, °£È¤ ÀÎº¸Å©°¡ ºÒ·¯¿ÍÁö¸é¼­ ¿À·ù°¡ ³ª´Â °æ¿ì°¡ ÀÖ´Ù.
-            // °ÔÀÓ ¿ÀºêÁ§Æ®´Â Á×¾ú´Âµ¥ ÀÎº¸Å©¸¦ È£ÃâÇß´Ù¸ç.
+            // ë°˜ë³µ í™•ì¸ ì·¨ì†Œí•˜ê¸°.
+            // ì•ˆ í•´ë„ ë˜ê¸´ í•˜ì§€ë§Œ ê°„í—ì ìœ¼ë¡œ ë¬¸ì œê°€ ìƒê¹€.
+            // ê¸°ë³¸ì ìœ¼ë¡œ ì½”ë£¨í‹´ìœ¼ë¡œ ë„ëŠ”ë°, ê²Œìž„ ì˜¤ë¸Œì íŠ¸ê°€ ì‚´ì•„ìžˆì–´ì•¼ ëˆë‹¤.
+            // ì§€ê¸ˆì²˜ëŸ¼ ê²Œìž„ ì˜¤ë¸Œì íŠ¸ê°€ ì‚­ì œë˜ë©´ ì•Œì•„ì„œ ì£½ëŠ”ë°, ì½”ë£¨í‹´ì´ë©´ ìœ ë‹ˆí‹°ê°€ ì•Œì•„ì„œ ì£½ì—¬ì£¼ëŠ”ë°, ì¸ë³´í¬ëŠ” ë‚´ë¶€ì ìœ¼ë¡œ ì•½ê°„ ë‹¤ë¥´ê²Œ ê´€ë¦¬ë¥¼ í•œë‹¤.
+            // ì˜ˆì•½ í‚¬ ë¦¬ìŠ¤íŠ¸ì— ì˜¬ë¼ê°€ìžˆëŠ”ë°, ê°„í˜¹ ì¸ë³´í¬ê°€ ë¶ˆëŸ¬ì™€ì§€ë©´ì„œ ì˜¤ë¥˜ê°€ ë‚˜ëŠ” ê²½ìš°ê°€ ìžˆë‹¤.
+            // ê²Œìž„ ì˜¤ë¸Œì íŠ¸ëŠ” ì£½ì—ˆëŠ”ë° ì¸ë³´í¬ë¥¼ í˜¸ì¶œí–ˆë‹¤ë©°.
             CancelInvoke("CheckChildState");
-            // ÆÄ±«.
+            // íŒŒê´´.
             Destroy(gameObject);
         }
     }

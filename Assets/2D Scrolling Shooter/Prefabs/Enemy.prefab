@@ -230,7 +230,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SoundPlayer, Assembly-CSharp
-        m_MethodName: PlayExplosionSound
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -280,4 +280,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootInterval: 1
   bulletSpeed: 3
+  shootStopYPosition: -2
   bulletPrefab: {fileID: 4140436640626308387, guid: c2c9f08766bf735438e2f21d0d4277ff, type: 3}

@@ -1,14 +1,14 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-// Æø¹ß ÀÌÆåÆ®¸¦ Àç»ı½ÃÅ°´Â ½ºÅ©¸³Æ®.
+// í­ë°œ ì´í™íŠ¸ë¥¼ ì¬ìƒì‹œí‚¤ëŠ” ìŠ¤í¬ë¦½íŠ¸.
 public class ExplosionEffector : MonoBehaviour
 {
-    // Æø¹ß ¾Ö´Ï¸ŞÀÌ¼ÇÀ» Àç»ıÇÒ ÇÁ¸®ÆÕ.
+    // í­ë°œ ì• ë‹ˆë©”ì´ì…˜ì„ ì¬ìƒí•  í”„ë¦¬íŒ¹.
     [SerializeField] private GameObject explosion;
     public void PlayExplosionEffect(Vector3 explosionPosition)
     {
-        // Àü´Ş¹ŞÀº À§Ä¡¿¡ explosion ÇÁ¸®ÆÕ »ı¼º.
+        // ì „ë‹¬ë°›ì€ ìœ„ì¹˜ì— explosion í”„ë¦¬íŒ¹ ìƒì„±.
         Instantiate(explosion, explosionPosition, Quaternion.identity);
     }
 }

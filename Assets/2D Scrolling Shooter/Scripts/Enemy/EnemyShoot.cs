@@ -1,36 +1,36 @@
-using UnityEngine;
-// Àû ¿ìÁÖ¼±ÀÇ Åº¾à ¹ß»ç¸¦ Ã³¸®ÇÏ´Â ½ºÅ©¸³Æ®.
+ï»¿using UnityEngine;
+// ì  ìš°ì£¼ì„ ì˜ íƒ„ì•½ ë°œì‚¬ë¥¼ ì²˜ë¦¬í•˜ëŠ” ìŠ¤í¬ë¦½íŠ¸.
 public class EnemyShoot : MonoBehaviour
 {
-    // ÇÊµå.
-    // ÇÊµå ¹èÄ¡¿¡´Â Á¤´äÀÌ ÀÖ´Ù. 16byte ´ÜÀ§·Î ²÷À¸¸é ÁÁ´Ù.
-    // ¿Ö³ÄÇÏ¸é 16byte°¡ ¾È µÇ¸é À¯´ÏÆ¼°¡ ³»ºÎÀûÀ¸·Î paddingÀ» ºÙ¿©¼­ 16byte·Î ¸¸µç´Ù.
-    // SIMD¿Í MMX, SS2¸í·É¾î µîÀÇ CPU °è»ê±â°¡ ÀÖ´Âµ¥, °Å±â¿¡ Áý¾î³Ö¾îÁÖ±â ¶§¹®ÀÌ´Ù.
-    // ±×·¡¼­ Áö±ÝÀÇ °æ¿ì¿£ 4byte ¼Õ½ÇÀ» º¸´Â °ÍÀÌ´Ù. ÇÏÁö¸¸ ¿ì¸®´Â Áö±Ý °¡´ÉÇÑ »óÅÂ°¡ ¾Æ´Ï±â ¶§¹®¿¡ ±×³É µÎ¸é µÈ´Ù.
-    // ¿ì¸®¿¡°Õ °­Á¦»çÇ×ÀÌ ¾Æ´ÏÁö¸¸ ½¦ÀÌ´õ¿¡¼± °­Á¦»çÇ×ÀÌ´Ù. ¿À·ù ³­´Ù.
+    // í•„ë“œ.
+    // í•„ë“œ ë°°ì¹˜ì—ëŠ” ì •ë‹µì´ ìžˆë‹¤. 16byte ë‹¨ìœ„ë¡œ ëŠìœ¼ë©´ ì¢‹ë‹¤.
+    // ì™œëƒí•˜ë©´ 16byteê°€ ì•ˆ ë˜ë©´ ìœ ë‹ˆí‹°ê°€ ë‚´ë¶€ì ìœ¼ë¡œ paddingì„ ë¶™ì—¬ì„œ 16byteë¡œ ë§Œë“ ë‹¤.
+    // SIMDì™€ MMX, SS2ëª…ë ¹ì–´ ë“±ì˜ CPU ê³„ì‚°ê¸°ê°€ ìžˆëŠ”ë°, ê±°ê¸°ì— ì§‘ì–´ë„£ì–´ì£¼ê¸° ë•Œë¬¸ì´ë‹¤.
+    // ê·¸ëž˜ì„œ ì§€ê¸ˆì˜ ê²½ìš°ì—” 4byte ì†ì‹¤ì„ ë³´ëŠ” ê²ƒì´ë‹¤. í•˜ì§€ë§Œ ìš°ë¦¬ëŠ” ì§€ê¸ˆ ê°€ëŠ¥í•œ ìƒíƒœê°€ ì•„ë‹ˆê¸° ë•Œë¬¸ì— ê·¸ëƒ¥ ë‘ë©´ ëœë‹¤.
+    // ìš°ë¦¬ì—ê² ê°•ì œì‚¬í•­ì´ ì•„ë‹ˆì§€ë§Œ ì‰ì´ë”ì—ì„  ê°•ì œì‚¬í•­ì´ë‹¤. ì˜¤ë¥˜ ë‚œë‹¤.
     
-    // ¹ß»ç °£°Ý (µô·¹ÀÌ, ´ÜÀ§: ÃÊ).
+    // ë°œì‚¬ ê°„ê²© (ë”œë ˆì´, ë‹¨ìœ„: ì´ˆ).
     [SerializeField] private float shootInterval = 1.0f;
-    // Åº¾àÀÇ ¼Ó·Â.
+    // íƒ„ì•½ì˜ ì†ë ¥.
     [SerializeField] private float bulletSpeed = 3.0f;
 
-    // Åº¾àÀÇ ¹ß»ç¸¦ Á¦ÇÑÇÏ´Â Y ³ôÀÌ °ª.
+    // íƒ„ì•½ì˜ ë°œì‚¬ë¥¼ ì œí•œí•˜ëŠ” Y ë†’ì´ ê°’.
     [SerializeField] private float shootStopYPosition = -2f;
 
-    // Åº¾à ÇÁ¸®ÆÕ ¿¬°á.
+    // íƒ„ì•½ í”„ë¦¬íŒ¹ ì—°ê²°.
     [SerializeField] private GameObject bulletPrefab;
 
-    // ÇÃ·¹ÀÌ¾îÀÇ Æ®·£½ºÆûÀ» ÂüÁ¶ÇÏ´Â º¯¼ö.
+    // í”Œë ˆì´ì–´ì˜ íŠ¸ëžœìŠ¤í¼ì„ ì°¸ì¡°í•˜ëŠ” ë³€ìˆ˜.
     private Transform refPlayer;
 
-    // °æ°ú ½Ã°£À» °è»êÇÏ´Â º¯¼ö.
+    // ê²½ê³¼ ì‹œê°„ì„ ê³„ì‚°í•˜ëŠ” ë³€ìˆ˜.
     private float elapesdTime = 0f;
 
     private void Awake()
     {
-        // ÇÃ·¹ÀÌ¾î °ÔÀÓ ¿ÀºêÁ§Æ®¸¦ °Ë»öÇÑ µÚ¿¡ refPlayer¿¡ Æ®·£½ºÆû ÀúÀå.
-        // ÀÌ¸§À¸·Î Ã£´Â °Íµµ °¡´ÉÇÏ±ä ÇÏÁö¸¸ ÁÁÁö ¾Ê´Ù.
-        // ±×·¡¼­ ¿ì¸®´Â À¯´ÏÆ¼°¡ Á¦°øÇÏ´Â ÇÃ·¹ÀÌ¾î ÅÂ±×¸¦ ÀÌ¿ëÇØ º¼ °ÍÀÌ´Ù.
+        // í”Œë ˆì´ì–´ ê²Œìž„ ì˜¤ë¸Œì íŠ¸ë¥¼ ê²€ìƒ‰í•œ ë’¤ì— refPlayerì— íŠ¸ëžœìŠ¤í¼ ì €ìž¥.
+        // ì´ë¦„ìœ¼ë¡œ ì°¾ëŠ” ê²ƒë„ ê°€ëŠ¥í•˜ê¸´ í•˜ì§€ë§Œ ì¢‹ì§€ ì•Šë‹¤.
+        // ê·¸ëž˜ì„œ ìš°ë¦¬ëŠ” ìœ ë‹ˆí‹°ê°€ ì œê³µí•˜ëŠ” í”Œë ˆì´ì–´ íƒœê·¸ë¥¼ ì´ìš©í•´ ë³¼ ê²ƒì´ë‹¤.
         var player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
@@ -46,20 +46,20 @@ public class EnemyShoot : MonoBehaviour
 
     private void Update()
     {
-        // Å¸ÀÌ¸Ó ¾÷µ¥ÀÌÆ®.
+        // íƒ€ì´ë¨¸ ì—…ë°ì´íŠ¸.
         elapesdTime += Time.deltaTime;
 
-        // ¹ß»ç °£°Ý ½Ã°£¸¸Å­ Áö³µÀ¸¸é Åº¾à ¹ß»ç.
+        // ë°œì‚¬ ê°„ê²© ì‹œê°„ë§Œí¼ ì§€ë‚¬ìœ¼ë©´ íƒ„ì•½ ë°œì‚¬.
         if (elapesdTime > shootInterval)
         {
-            // Åº¾à ¹ß»ç.
+            // íƒ„ì•½ ë°œì‚¬.
             Shoot();
-            // Å¸ÀÌ¸Ó º¯¼ö ÃÊ±âÈ­.
+            // íƒ€ì´ë¨¸ ë³€ìˆ˜ ì´ˆê¸°í™”.
             elapesdTime = 0f;
         }
     }
 
-    // ¹ß»ç ¸Þ¼Òµå.
+    // ë°œì‚¬ ë©”ì†Œë“œ.
     private void Shoot()
     {
 
@@ -67,30 +67,30 @@ public class EnemyShoot : MonoBehaviour
         {
             return;
         }
-        // º¤ÅÍÀÇ µ¡¼À°ú »¬¼ÀÀ» °øºÎÇØµÎ¸é ÁÁ´Ù. ±×³É »©±âÀÏ °æ¿ì¿¡ µÚ¿¡ °Í¿¡¼­ ¾ÕÀÇ °ÍÀ» ÇâÇÏ´Â ¹æÇâÀÌ »ý¼ºµÈ´Ù´Â Á¤µµ¸¸ ¾Ë¾Æµµ µÈ´Ù.
+        // ë²¡í„°ì˜ ë§ì…ˆê³¼ ëº„ì…ˆì„ ê³µë¶€í•´ë‘ë©´ ì¢‹ë‹¤. ê·¸ëƒ¥ ë¹¼ê¸°ì¼ ê²½ìš°ì— ë’¤ì— ê²ƒì—ì„œ ì•žì˜ ê²ƒì„ í–¥í•˜ëŠ” ë°©í–¥ì´ ìƒì„±ëœë‹¤ëŠ” ì •ë„ë§Œ ì•Œì•„ë„ ëœë‹¤.
         Vector3 direction = refPlayer.position - transform.position;
-        // ÇÃ·¹ÀÌ¾îÀÇ À§Ä¡¸¦ ÇâÇÏ´Â ¹æÇâ ±¸ÇÏ±â.
-        // °ËÁõ.
-        // ÇÃ·¹ÀÌ¾î°¡ Àû Ä³¸¯ÅÍ ¾Õ¿¡ ÀÖ´ÂÁö µÚ¿¡ ÀÖ´ÂÁö È®ÀÎ ÈÄ ¾Õ¿¡ ÀÖÀ¸¸é ¹ß»ç.
-        // Dot(³»Àû)À» È°¿ëÇÑ´Ù.
-        // °ª¸¸ ºÁ¼­´Â À§Ä¡ÀÎÁö º¤ÅÍÀÎÁö ¾Ë ¼ö ¾ø´Ù.
-        // DotÀº º¤ÅÍ(¹æÇâ)¸¦ ÀÌ¿ëÇÑ´Ù.
-        // ÇÃ·¹ÀÌ¾î¿Í ÀûÀÇ À§Ä¡¸¦ »©¼­ ³»ÀûÀ» ÇÑ´Ù.
-        // Aº¤ÅÍ ³»Àû B³»ÀûÀ» ÇÏ¸é |A|*|B| * Cos¼¼Å¸.
-        // ³»Àû °ªÀÌ +ÀÎÁö -ÀÎÁö º¸¸é µÈ´Ù.
-        // + ºÎºÐÀÌ ¾Õ ¹æÇâÀÌ´Ù.
+        // í”Œë ˆì´ì–´ì˜ ìœ„ì¹˜ë¥¼ í–¥í•˜ëŠ” ë°©í–¥ êµ¬í•˜ê¸°.
+        // ê²€ì¦.
+        // í”Œë ˆì´ì–´ê°€ ì  ìºë¦­í„° ì•žì— ìžˆëŠ”ì§€ ë’¤ì— ìžˆëŠ”ì§€ í™•ì¸ í›„ ì•žì— ìžˆìœ¼ë©´ ë°œì‚¬.
+        // Dot(ë‚´ì )ì„ í™œìš©í•œë‹¤.
+        // ê°’ë§Œ ë´ì„œëŠ” ìœ„ì¹˜ì¸ì§€ ë²¡í„°ì¸ì§€ ì•Œ ìˆ˜ ì—†ë‹¤.
+        // Dotì€ ë²¡í„°(ë°©í–¥)ë¥¼ ì´ìš©í•œë‹¤.
+        // í”Œë ˆì´ì–´ì™€ ì ì˜ ìœ„ì¹˜ë¥¼ ë¹¼ì„œ ë‚´ì ì„ í•œë‹¤.
+        // Aë²¡í„° ë‚´ì  Bë‚´ì ì„ í•˜ë©´ |A|*|B| * Così„¸íƒ€.
+        // ë‚´ì  ê°’ì´ +ì¸ì§€ -ì¸ì§€ ë³´ë©´ ëœë‹¤.
+        // + ë¶€ë¶„ì´ ì•ž ë°©í–¥ì´ë‹¤.
         //if ((Vector3.Dot(transform.up, direction.normalized) > 0f))
         //{
         //    return;
         //}
-        // ÀÌ°É ÀÀ¿ëÇØ¼­ ÇÃ·¹ÀÌ¾î°¡ ´Ù°¡°£ ¹®ÀÌ ¿­¸®´Â ¹æÇâÀ» °áÁ¤ÇØÁÙ ¼öµµ ÀÖ´Ù.
+        // ì´ê±¸ ì‘ìš©í•´ì„œ í”Œë ˆì´ì–´ê°€ ë‹¤ê°€ê°„ ë¬¸ì´ ì—´ë¦¬ëŠ” ë°©í–¥ì„ ê²°ì •í•´ì¤„ ìˆ˜ë„ ìžˆë‹¤.
          
 
-        // ÇÁ¸®ÆÕÀ» ÀÌ¿ëÇØ Åº¾àÀ» »ý¼ºÇÏ°í, 
+        // í”„ë¦¬íŒ¹ì„ ì´ìš©í•´ íƒ„ì•½ì„ ìƒì„±í•˜ê³ , 
         var newBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-        // ÀÌ·± ½ÄÀ¸·Î º¯¼ÓÀ» ÁÙ ¼ö ÀÖ´Ù. ´ë¹ÌÁö¿¡µµ ÀÌ·± ½ÄÀ¸·Î º¯ÁÖ¸¦ ÁÙ ¼ö ÀÖ´Ù.
+        // ì´ëŸ° ì‹ìœ¼ë¡œ ë³€ì†ì„ ì¤„ ìˆ˜ ìžˆë‹¤. ëŒ€ë¯¸ì§€ì—ë„ ì´ëŸ° ì‹ìœ¼ë¡œ ë³€ì£¼ë¥¼ ì¤„ ìˆ˜ ìžˆë‹¤.
         float speed = Random.Range(bulletSpeed * 0.8f, bulletSpeed * 1.2f);
-        // rigidbody2d ÄÄÆ÷³ÍÆ®¿¡ ¼Óµµ(ºü¸£±â(½ºÄ®¶ó), ¹æÇâ(º¤ÅÍ)) ¼³Á¤.
+        // rigidbody2d ì»´í¬ë„ŒíŠ¸ì— ì†ë„(ë¹ ë¥´ê¸°(ìŠ¤ì¹¼ë¼), ë°©í–¥(ë²¡í„°)) ì„¤ì •.
         newBullet.GetComponent<Rigidbody2D>().velocity = direction.normalized * speed;
     }
     // 

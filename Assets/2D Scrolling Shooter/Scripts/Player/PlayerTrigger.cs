@@ -1,38 +1,56 @@
-using System.Runtime.CompilerServices;
+ï»¿using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
-// ÇÃ·¹ÀÌ¾îÀÇ Ãæµ¹ Ã³¸®¸¦ ´ã´çÇÏ´Â ½ºÅ©¸³Æ®.
+// í”Œë ˆì´ì–´ì˜ ì¶©ëŒ ì²˜ë¦¬ë¥¼ ë‹´ë‹¹í•˜ëŠ” ìŠ¤í¬ë¦½íŠ¸.
 public class PlayerTrigger : MonoBehaviour
 {
-    // Àû Åº¾àÀÇ ÅÂ±×.
+    // ì  íƒ„ì•½ì˜ íƒœê·¸.
     [SerializeField] private string enemyBulletTag;
-    // ÇÃ·¹ÀÌ¾îÀÇ Ã¼·Â.
-    [SerializeField] private float hp = 100f;
+    // í”Œë ˆì´ì–´ì˜ ì²´ë ¥.
+    [SerializeField] private float hp = 0f;
+    // í”Œë ˆì´ì–´ì˜ ì›ë˜(ì´ˆê¸°) ì²´ë ¥.
+    [SerializeField] private float originHP = 100f;
 
-    // ÀÌº¥Æ®.
+    // í”Œë ˆì´ì–´ì˜ ì²´ë ¥ ìˆ˜ì¹˜ë¥¼ ë³´ì—¬ì¤„ UI ì´ë¯¸ì§€ ì°¸ì¡° ë³€ìˆ˜.
+    [SerializeField] private UnityEngine.UI.Image hpBarImage;
+
+    // ì´ë²¤íŠ¸.
     public UnityEvent OnPlayerDamaged;
     public UnityEvent<Vector3> OnPlayerDead;
+
+    private void Awake()
+    {
+        // ì´ˆê¸° ì²´ë ¥ ê°’ì„ hpì— ì„¤ì •.
+        hp = originHP;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag(enemyBulletTag))
         {
-            // Àû Åº¾à Á¦°Å.
+            // ì  íƒ„ì•½ ì œê±°.
             Destroy(collision.gameObject);
 
-            // ÇÃ·¹ÀÌ¾î°¡ ´ë¹ÌÁö¸¦ ÀÔ¾ú´Ù´Â ÀÌº¥Æ® ¹ßÇà.
+            // í”Œë ˆì´ì–´ê°€ ëŒ€ë¯¸ì§€ë¥¼ ì…ì—ˆë‹¤ëŠ” ì´ë²¤íŠ¸ ë°œí–‰.
             OnPlayerDamaged?.Invoke();
 
-            // ´ë¹ÌÁö Ã³¸®.
+            // ëŒ€ë¯¸ì§€ ì²˜ë¦¬.
             hp = hp - collision.GetComponent<BulletDamage>().Damage;
             hp = hp < 0f ? 0f : hp;
 
-            // Á×À½ È®ÀÎ ¹× ÀÌº¥Æ® ¹ßÇà.
+            // ì²´ë ¥ UI ì—…ë°ì´íŠ¸.
+            if (hpBarImage != null)
+            {
+                // fillAmount ê°’ì€ í¼ì„¼í‹°ì§€ë¥¼ ê¼ì‚°í•´ì„œ ì„¤ì •.
+                hpBarImage.fillAmount = hp / originHP;
+            }
+
+            // ì£½ìŒ í™•ì¸ ë° ì´ë²¤íŠ¸ ë°œí–‰.
             if (hp == 0f)
             {
-                // ÀÌº¥Æ® ¹ßÇà.
+                // ì´ë²¤íŠ¸ ë°œí–‰.
                 OnPlayerDead?.Invoke(transform.position);
-                // ÇÃ·¹ÀÌ¾î °ÔÀÓ ¿ÀÇÁÁ§Æ® Á¦°Å.(ÀÌ ½ºÅ©¸³Æ®°¡ ´Ş¸° ¿ÀºêÁ§Æ® Á¦°Å)
+                // í”Œë ˆì´ì–´ ê²Œì„ ì˜¤í”„ì íŠ¸ ì œê±°.(ì´ ìŠ¤í¬ë¦½íŠ¸ê°€ ë‹¬ë¦° ì˜¤ë¸Œì íŠ¸ ì œê±°)
                 Destroy(gameObject);
             }
         }

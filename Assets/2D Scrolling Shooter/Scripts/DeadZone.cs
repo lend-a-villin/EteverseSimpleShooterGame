@@ -1,10 +1,10 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 public class DeadZone : MonoBehaviour
 {
-    // ÀÌ ¿µ¿ªÀ» ¹ş¾î³­ Äİ¶óÀÌ´õ¸¦ »èÁ¦.
+    // ì´ ì˜ì—­ì„ ë²—ì–´ë‚œ ì½œë¼ì´ë”ë¥¼ ì‚­ì œ.
     private void OnTriggerExit2D(Collider2D collision)
     {
-        // °ÔÀÓ ¿ÀºêÁ§Æ® »èÁ¦.
+        // ê²Œì„ ì˜¤ë¸Œì íŠ¸ ì‚­ì œ.
         Destroy(collision.gameObject);
     }
 }

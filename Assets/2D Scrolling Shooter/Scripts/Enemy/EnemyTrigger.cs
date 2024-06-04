@@ -34,6 +34,23 @@ public class EnemyTrigger : MonoBehaviour
             {
                 // 죽음 이벤트 발행.
                 OnDead?.Invoke(transform.position);
+
+                // 점수 획득 처리.
+                // 1. 점수 관리자 검색.
+                // var은 무조건 우변에 타입이 선언되어야 한다.
+                // 어떠한 매니저에 자주 접근해야 한다면 싱글톤을 고려해봐야 한다.
+                // 구현 방법이 정말 다양하다.
+                //var scoreManager = FindFirstObjectByType<ScoreManager>();
+
+                // 2. 점수 관리자에 점수 획득 정보 전달.
+                //scoreManager.AddScore(100);
+
+                // 싱글톤 점수 관리자에게 바로 점수 획득 전달.
+                ScoreManager.Get().AddScore(100);
+                // 함수 타이핑 대신에 프로퍼티로 하면 아래와 같이 불러올 수도 있다.
+                // C#에선 아래 형태가 더 많이 보일 것이다.
+                //ScoreManager.Instance.AddScore(100);
+
                 // 삭제.
                 Destroy(gameObject);
             }
